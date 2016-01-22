@@ -69,23 +69,7 @@ define(["util", "require", "jquery", "windowing", "storage"], function (util, re
     },
 
     browserUnsupported: function (next) {
-      if (! $.browser.msie) {
         next();
-        return;
-      }
-      var cancel = true;
-      windowing.show("#togetherjs-browser-unsupported", {
-        onClose: function () {
-          if (cancel) {
-            session.close();
-          } else {
-            next();
-          }
-        }
-      });
-      $("#togetherjs-browser-unsupported-anyway").click(function () {
-        cancel = false;
-      });
     },
 
     sessionIntro: function (next) {
@@ -93,7 +77,8 @@ define(["util", "require", "jquery", "windowing", "storage"], function (util, re
         next();
         return;
       }
-      if (TogetherJS.getConfig("suppressJoinConfirmation")) {
+      TogetherJS.config.close("suppressJoinConfirmation");
+      if (TogetherJS.config.get("suppressJoinConfirmation")) {
         next();
         return;
       }
@@ -128,8 +113,9 @@ define(["util", "require", "jquery", "windowing", "storage"], function (util, re
     },
 
     share: function (next) {
+      TogetherJS.config.close("suppressInvite");
       if (session.isClient || (! session.firstRun) ||
-          TogetherJS.getConfig("suppressInvite")) {
+          TogetherJS.config.get("suppressInvite")) {
         next();
         return;
       }

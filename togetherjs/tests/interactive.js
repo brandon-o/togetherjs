@@ -10,7 +10,7 @@ if (config) {
   }
 }
 
-Test.require("ui", "chat", "util", "session", "jquery", "storage", "peers", "cursor", "windowing", "elementFinder");
+Test.require("ui", "chat", "util", "session", "jquery", "storage", "peers", "cursor", "windowing", "elementFinder", "templates-en-US");
 // => Loaded ...
 
 printChained(
@@ -197,7 +197,7 @@ el.find("#include-hash").change(function (event) {
   localStorage.setItem("interactiveOverrides", JSON.stringify(config));
   alert("Reload required");
 });
-if (TogetherJS.getConfig("includeHashInUrl")) {
+if (TogetherJS.config.get("includeHashInUrl")) {
   el.find("#include-hash").prop("checked", true);
 }
 
